@@ -1,0 +1,61 @@
+<div id="Dots' Home"></div>
+<span id="Cursor"></span>
+<script>
+var MouseX,MouseY;
+var WholePage=document.querySelector('body');
+var Home=document.getElementById("Dots' Home");
+var DotcntShow=document.getElementById("Dots' Home");
+var Cursor=document.getElementById("Cursor");
+
+document.addEventListener('mousemove',function(e){
+	MouseX=e.pageX,MouseY=e.pageY;
+});
+document.addEventListener('click',function()
+	{
+		var Round=document.createElement('span');
+		Round.id='BigDot';
+		Round.style.left=MouseX+'px';
+		Round.style.top=MouseY+'px';
+		WholePage.appendChild(Round);
+		setTimeout(()=>{Round.remove()},500);
+	});
+var dotCnt=0;
+document.addEventListener('mousemove',function()
+	{
+		if(dotCnt>100)	return;
+		dotCnt++;
+		var dot=document.createElement('span');
+		dot.id='SmallDot';
+		dot.style.left=MouseX+'px';
+		dot.style.top=MouseY+'px';
+		Cursor.style.left=MouseX+'px';
+		Cursor.style.top=MouseY+'px';
+		Home.appendChild(dot);
+		setTimeout(()=>{dot.remove();dotCnt--;},900);
+	});
+//Special User Comment
+var AllComment=document.getElementsByClassName("feedbackListSubtitle");
+var YourComment;
+var renderd=false;
+
+setTimeout(function()
+	{
+		if(renderd)	return;
+		for(i=0;i<AllComment.length;i++)
+			for(j=0;j<AllComment[i].children.length;j++)
+			{
+				if(AllComment[i].children[j].textContent=="PCwqyy")
+					AllComment[i].children[j].style.animation="PCwqyy 2s linear infinite";
+				if(AllComment[i].children[j].textContent=="haozexu")
+					AllComment[i].children[j].style.animation="haozexu 60s linear infinite",
+					AllComment[i].children[j].style.display="inline-flex",
+					AllComment[i].children[j].style.fontFamily="Playball";
+			}
+		YourComment=document.getElementById("divCommentShow");
+		YourComment.textContent="Your new comment will be here";
+
+		renderd=true;
+	},1000);
+
+
+</script>
