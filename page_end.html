@@ -64,7 +64,6 @@ setTimeout(function()
 
 </script>
 
-<!--NeoTable-->
 <script>
 /** @param {HTMLCollectionOf<HTMLTableCellElement>} tars */
 function NeoTable(tars)
@@ -78,7 +77,7 @@ function NeoTable(tars)
 		now=tars[i];
 		res=now.textContent.search('(\\[(X|O|V)\\])');
 		if(res!=-1)
-			{
+		{
 			switch(now.textContent[res+1])
 			{
 				case 'X':now.classList.add('NoTable');break;
@@ -87,9 +86,13 @@ function NeoTable(tars)
 			}
 			now.innerHTML=now.innerHTML.substring(res+3);
 		}
-		res=now.textContent.search('(\\[D\\])');
-		if(res!=-1)
+		res=now.textContent.match('(\\[D\\])');
+		if(res!=null)
+		{
+			now.innerHTML=now.innerHTML.substring(res[0].length);
 			DelList.push(now);
+		}
+
 		res=now.textContent.match('\\{cs=([0-9]+)\\}');
 		if(res!=null)
 		{
@@ -98,7 +101,7 @@ function NeoTable(tars)
 			Ex=now;
 			for(var j=1;j<Number(res[1]);j++)
 			{
-				var Ex=Ex.nextElementSibling;
+				Ex=Ex.nextElementSibling;
 				DelList.push(Ex);
 			}
 		}
@@ -111,20 +114,108 @@ function NeoTable(tars)
 		res=now.textContent.match('\\{SL\\}');
 		if(res!=null)
 		{
-			now.style.position='sticky';
-			now.style.left='0';
-			now.style.backgroundColor='white';
+			now.classList.add('StickLeft');
 			now.innerHTML=now.innerHTML.substring(res[0].length);
+		}
+
+		if(now.innerHTML=='')
+		{
+			if(now.classList.contains('YesTable'))
+				now.innerHTML=('<img class="ImgNeo" src="https://images.cnblogs.com/cnblogs_com/blogs/766141/galleries/2264367/o_250228030719_Tick.svg">');
+			if(now.classList.contains('HalfTable'))
+				now.innerHTML=('<img class="ImgNeo" src="https://images.cnblogs.com/cnblogs_com/blogs/766141/galleries/2264367/o_250228030719_Circle.svg">');
+			if(now.classList.contains('NoTable'))
+				now.innerHTML=('<img class="ImgNeo" src="https://images.cnblogs.com/cnblogs_com/blogs/766141/galleries/2264367/o_250228030719_Cross.svg">');
 		}
 	}
 	for(i in DelList)
 		DelList[i].remove();
 }
 			
-var Tds=document.getElementsByTagName('td');
-var Ths=document.getElementsByTagName('th');
-NeoTable(Tds);
-NeoTable(Ths);
+var AllTds=document.getElementsByTagName('td');
+var AllThs=document.getElementsByTagName('th');
+NeoTable(AllThs);
+NeoTable(AllTds);
+</script>
+
+<!--Mermaid fix-->
+<script>
+var MermaidMargin=10;
+window.onload=function(){
+	var MermaidStuffs=jQuery(".mermaid>svg>g");
+	for(i of MermaidStuffs)
+	{
+		var r=i.getBBox();
+		i.parentElement.setAttribute("viewBox",
+			`${-MermaidMargin} ${-MermaidMargin} ${r.width+MermaidMargin} ${r.height+MermaidMargin}`);
+	}
+}
+</script>
+
+<!--SysTree-->
+<script>
+/** @type {String} */
+var TreeWork;
+/**
+ *  @param {String} type 
+ *  @returns {String} */
+function GetTreeHTML(type)
+{
+	// console.log(`[Now]${TreeWork}`);
+	var res=TreeWork.match(/^\s*([^\(|,|\)]*)\s*\(/);
+	if(res==undefined)
+	{
+		res=TreeWork.match(/^\s*([^\(|,|\)]+)\s*/);
+		TreeWork=TreeWork.substring(res[0].length);
+		// console.log(`[Ret]${TreeWork}`);
+		return `
+			<table class="SysTreeTable LeafTable"><tr>
+				<td class="SysTree ${type=="DTree"?"LineD":"LineH"}"></td>
+				<td class="SysTree Leaf" rowspan="2">
+					<span class="SysTreeText">${res[1]}</span>
+				</td>
+			</tr><tr>
+				<td class="SysTree ${type=="UTree"?"LineU":"Empty"}"></td>
+			</tr></table>`;
+	}
+	var Parent=res[1];
+	TreeWork=TreeWork.substring(res[0].length);
+	// console.log(`[Then]${TreeWork}`);
+	var Child1=GetTreeHTML("UTree");
+	res=TreeWork.match(/^\s*,\s*/);
+	TreeWork=TreeWork.substring(res[0].length);
+	// console.log(`[-,]${TreeWork}`);
+	var Child2=GetTreeHTML("DTree");
+	res=TreeWork.match(/^\s*\)\s*/);
+	TreeWork=TreeWork.substring(res[0].length);
+	// console.log(`[-)]${TreeWork}`);
+	return `
+		<table class="SysTreeTable"><tr>
+			<td class="SysTree P ${type=="DTree"?"LineD":"LineH"}">
+				<span class="SysTreeText">${Parent}</span>
+			</td>
+			<td class="SysTree C1">${Child1}</td>
+		</tr><tr>
+			<td class="SysTree ${type=="UTree"?"LineU":"Empty"}"></td>
+			<td class="SysTree C2">${Child2}</td>
+		</tr></table>`;
+}
+
+/** @param {HTMLCollectionOf<HTMLDivElement>} eles */
+function MakeTree(eles)
+{
+	for(var i=0;i<eles.length;i++)
+	{
+		var res=eles[i].textContent.match(/^\s*\|\|\|([^\|]+?)\|\|\|/m);
+		if(res==null)	continue;
+		TreeWork=res[1];
+		eles[i].innerHTML=GetTreeHTML("Root");
+		eles[i].classList.add("SysTreeWrapper");
+	}
+}
+
+var Paragraphs=document.getElementsByTagName("p");
+MakeTree(Paragraphs);
 </script>
 
 <!--The End Poem-->

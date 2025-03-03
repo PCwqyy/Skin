@@ -1,0 +1,23 @@
+.YesTable{
+	background-color: #c6f7b1;
+	color:#34922e;
+}
+.HalfTable{
+	background-color: #fffeb3;
+	color:#deaf2d;
+}
+.NoTable{
+	background-color: #ff9494;
+	color:#b52020;
+}
+.StickLeft{
+	position: sticky;
+	left: 0;
+	background-color: white;
+	z-index: 2;
+}
+img.ImgNeo{
+	width: 5vmin;
+	height: 5vmin;
+	border: unset !important;
+}

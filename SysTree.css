@@ -1,0 +1,39 @@
+html{
+	--systree-col: dodgerblue;
+	--systree-solid: 2px;
+	--systree-horizontal: 6px;
+}
+.SysTreeTable{
+	border-collapse: collapse;
+	pointer-events: none;
+	height: 100%;
+}
+.SysTree{
+	border-spacing: 0px;
+	margin: unset;
+	padding: 0px var(--systree-horizontal);
+	pointer-events: none;
+}
+.SysTreeLeaf{
+	margin-left: var(--systree-horizontal);
+}
+.SysTree.LineU{
+	border-top: var(--systree-col) var(--systree-solid) solid;
+	border-left: var(--systree-col) var(--systree-solid) solid;
+}
+.SysTree.LineD{
+	border-bottom: var(--systree-col) var(--systree-solid) solid;
+	border-left: var(--systree-col) var(--systree-solid) solid;
+}
+.SysTree.LineH{
+	border-bottom: var(--systree-col) var(--systree-solid) solid;
+}
+.SysTree.P{
+	vertical-align: bottom;
+}
+.SysTree.C1,.SysTree.C2{
+	padding-left: 0px;
+}
+.SysTreeText{
+	pointer-events: all;
+}
