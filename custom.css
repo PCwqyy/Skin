@@ -356,7 +356,57 @@ span#SmallDot{
 				#f2ff00 0px 0px 10px;
 }
 
-/*各部分样式*/
+div#LoadingDiv{
+	position: fixed;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100vw;
+	background-color: white;
+	text-align: center;
+	z-index: 114516;
+}
+@keyframes LoadingOut{
+	0%{opacity: 1;}
+	100%{opacity: 0;}
+}
+span#LoadingSpan{
+	font-size: 10vh;
+	user-select: none;
+	vertical-align: middle;
+}
+span#LoadingMockWrap{
+	position: absolute;
+	width: 35vw;
+	height: 15vh;
+}
+span#LoadingMock{
+	position: absolute;
+	height: 100%;
+	left: 0%;
+	right: 0%;
+	background-color: white;
+	mix-blend-mode: difference;
+	animation: LoadingMocking 2s infinite;
+}
+@keyframes LoadingMocking{
+	0%{
+		left: 0%;
+		right: 100%;
+	}
+	50%{
+		left: 0%;
+		right: 0%;
+	}
+	100%{
+		left: 100%;
+		right: 0%;
+	}
+}
+
+/*-----------------各部分样式------------------*/
 /*home和头部开始*/
 #home {
 	margin: 0 auto;
@@ -1153,26 +1203,26 @@ a.layer{
 	font-size: 18px;
 }
 #cnblogs_post_body h1{
-	font: 7vh "Saira";
+	font: 7vh Saira, 等线;
 	margin-top: 7vh;
 }
 #cnblogs_post_body h2{
-	font: 6vh "Saira";
+	font: 6vh Saira, 等线;
 	margin-top: 5vh;
 }
 #cnblogs_post_body h3{
-	font: 5vh "Saira";
+	font: 5vh Saira, 等线;
 	margin-top: 4vh;
 }
 #cnblogs_post_body h4{
-	font: 4.5vh "Saira";
+	font: 4.5vh Saira, 等线;
 }
 #cnblogs_post_body h5{
-	font: 4vh "Saira";
+	font: 4vh Saira, 等线;
 	padding-left: 1vw;
 }
 #cnblogs_post_body h6{
-	font: 3.5vh "Saira";
+	font: 3.5vh Saira, 等线;
 	color: #888;
 	padding-left: 2vw;
 }
@@ -1264,6 +1314,9 @@ html{
 }
 #cnblogs_post_body p.SysTreeWrapper{
 	margin: 6vh 0;
+	padding: 1vh;
+	overflow-x: scroll;
+	overflow-y: hidden;
 }
 #cnblogs_post_body .SysTreeWrapper table.SysTreeTable{
 	display: table;
@@ -1286,6 +1339,13 @@ html{
 .SysTreeWrapper td.SysTreeLeaf{
 	margin-left: var(--systree-horizontal);
 }
+.SysTreeWrapper td.SysTree.Empty{
+	color: #00000000;
+	user-select: none;
+}
+.SysTreeWrapper td.SysTree:not(.Empty){
+	color: black;
+}
 .SysTreeWrapper td.SysTree.LineU{
 	border-top: var(--systree-col) var(--systree-solid) solid;
 	border-left: var(--systree-col) var(--systree-solid) solid;
@@ -1300,11 +1360,10 @@ html{
 .SysTreeWrapper td.SysTree.P{
 	vertical-align: bottom;
 }
-.SysTreeWrapper td.SysTree.C1,
-.SysTreeWrapper td.SysTree.C2{
+.SysTreeWrapper td.SysTree.Childs{
 	padding-left: 0px;
 }
-.SysTreeWrapper span.SysTreeText{
+.SysTreeWrapper td.SysTree:not(.Empty) span.SysTreeText{
 	pointer-events: all;
 	font-size: 22px;
 }

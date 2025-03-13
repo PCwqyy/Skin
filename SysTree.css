@@ -5,17 +5,21 @@ html{
 }
 .SysTreeTable{
 	border-collapse: collapse;
-	pointer-events: none;
+	/* pointer-events: none; */
 	height: 100%;
 }
 .SysTree{
 	border-spacing: 0px;
 	margin: unset;
 	padding: 0px var(--systree-horizontal);
-	pointer-events: none;
+	/* pointer-events: none; */
 }
 .SysTreeLeaf{
 	margin-left: var(--systree-horizontal);
+}
+.SysTree.Empty{
+	color: #00000000;
+	user-select: none;
 }
 .SysTree.LineU{
 	border-top: var(--systree-col) var(--systree-solid) solid;
@@ -31,7 +35,7 @@ html{
 .SysTree.P{
 	vertical-align: bottom;
 }
-.SysTree.C1,.SysTree.C2{
+.SysTree.Childs{
 	padding-left: 0px;
 }
 .SysTreeText{

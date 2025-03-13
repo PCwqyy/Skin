@@ -1,32 +1,50 @@
+function CSSColorToRGB(color)
+{
+	const tempDiv=document.createElement('div');
+	tempDiv.style.color=color;
+	document.body.appendChild(tempDiv);
+	const computedColor=getComputedStyle(tempDiv).color;
+	document.body.removeChild(tempDiv);
+	const rgbMatch=computedColor.match(/\d+/g);
+	if(rgbMatch&&rgbMatch.length>=3)
+		return rgbMatch.slice(0,3).map(Number);
+	console.warn('Invalid color format');
+}
+function isDarkColor(color)
+{
+	const [r,g,b]=CSSColorToRGB(color);
+	const brightness=(r*299+g*587+b*114)/1000;
+	return brightness<186;
+}
+
 /** @param {HTMLCollectionOf<HTMLTableCellElement>} tars */
 function NeoTable(tars)
 {
-	/** @type {Element}*/
-	var now,res;
-	/** @type {Array<Element>} */
+	/** @type {Array<HTMLElement>} */
 	var DelList=new Array();
 	for(i=0;i<tars.length;i++)
 	{
-		now=tars[i];
-		res=now.textContent.search('(\\[(X|O|V)\\])');
-		if(res!=-1)
+		var now=tars[i];
+		var res=now.textContent.match(/^\[([XOV])\]/);
+		now.classList.add("NeoTd");
+		if(res!=null)
 		{
-			switch(now.textContent[res+1])
+			switch(res[1])
 			{
 				case 'X':now.classList.add('NoTable');break;
 				case 'O':now.classList.add('HalfTable');break;
 				case 'V':now.classList.add('YesTable');break;
 			}
-			now.innerHTML=now.innerHTML.substring(res+3);
+			now.innerHTML=now.innerHTML.substring(res[0].length);
 		}
-		res=now.textContent.match('(\\[D\\])');
+		res=now.textContent.match(/^\[D\]/);
 		if(res!=null)
 		{
 			now.innerHTML=now.innerHTML.substring(res[0].length);
 			DelList.push(now);
 		}
 
-		res=now.textContent.match('\\{cs=([0-9]+)\\}');
+		res=now.textContent.match(/^\{cs=([0-9]+)\}/);
 		if(res!=null)
 		{
 			now.setAttribute('colspan',res[1]);
@@ -38,34 +56,37 @@ function NeoTable(tars)
 				DelList.push(Ex);
 			}
 		}
-		res=now.textContent.match('\\{rs=([0-9]+)\\}');
+		res=now.textContent.match(/^\{rs=([0-9]+)\}/);
 		if(res!=null)
 		{
 			now.setAttribute('rowspan',res[1]);
 			now.innerHTML=now.innerHTML.substring(res[0].length);
 		}
-		res=now.textContent.match('\\{SL\\}');
+		res=now.textContent.match(/^\{SL\}/);
 		if(res!=null)
 		{
 			now.classList.add('StickLeft');
 			now.innerHTML=now.innerHTML.substring(res[0].length);
 		}
+		res=now.textContent.match(/^\{col=(.+)\}/);
+		if(res!=null)
+		{
+			now.classList.add("diigoHighlight");//darkreader
+			now.style.setProperty("color",`${isDarkColor(res[1])?"#ffffffaf":"#000000af"}`);
+			now.style.setProperty("background-color",`${res[1]}`);
+			now.innerHTML=now.innerHTML.substring(res[0].length)+" ";
+		}
 
 		if(now.innerHTML=='')
 		{
 			if(now.classList.contains('YesTable'))
-				now.innerHTML=('<img class="ImgNeo" src="https://img2023.cnblogs.com/blog/2971758/202412/2971758-20241223101514623-1345162790.png">');
+				now.innerHTML=('<img class="ImgNeo" src="https://images.cnblogs.com/cnblogs_com/blogs/766141/galleries/2264367/o_250228030719_Tick.svg">');
 			if(now.classList.contains('HalfTable'))
-				now.innerHTML=('<img class="ImgNeo" src="https://img2023.cnblogs.com/blog/2971758/202412/2971758-20241223105901512-2143423915.png">');
+				now.innerHTML=('<img class="ImgNeo" src="https://images.cnblogs.com/cnblogs_com/blogs/766141/galleries/2264367/o_250228030719_Circle.svg">');
 			if(now.classList.contains('NoTable'))
-				now.innerHTML=('<img class="ImgNeo" src="https://img2023.cnblogs.com/blog/2971758/202412/2971758-20241223110021941-1928889318.png">');
+				now.innerHTML=('<img class="ImgNeo" src="https://images.cnblogs.com/cnblogs_com/blogs/766141/galleries/2264367/o_250228030719_Cross.svg">');
 		}
 	}
-	for(i in DelList)
-		DelList[i].remove();
+	for(var i of DelList)
+		i.remove();
 }
-			
-var Tds=document.getElementsByTagName('td');
-var Ths=document.getElementsByTagName('th');
-NeoTable(Tds);
-NeoTable(Ths);
