@@ -4,7 +4,7 @@
 	font-style: normal;
 	font-weight: lighter;
 	font-stretch: 100%;
-	src: url(https://fonts.gstatic.font.im/s/saira/v20/memWYa2wxmKQyPMrZX79wwYZQMhsyuShhKMjjbU9uXuA71rCksAxljYm.woff2) format('woff2');
+	src: url(https://gfonts.aby.pub/s/saira/v20/memWYa2wxmKQyPMrZX79wwYZQMhsyuShhKMjjbU9uXuA71rCksAxljYm.woff2) format('woff2');
 	unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
 }
 /* latin-ext */
@@ -13,7 +13,7 @@
 	font-style: normal;
 	font-weight: lighter;
 	font-stretch: 100%;
-	src: url(https://fonts.gstatic.font.im/s/saira/v20/memWYa2wxmKQyPMrZX79wwYZQMhsyuShhKMjjbU9uXuA71rCksExljYm.woff2) format('woff2');
+	src: url(https://gfonts.aby.pub/s/saira/v20/memWYa2wxmKQyPMrZX79wwYZQMhsyuShhKMjjbU9uXuA71rCksExljYm.woff2) format('woff2');
 	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -22,19 +22,40 @@
 	font-style: normal;
 	font-weight: lighter;
 	font-stretch: 100%;
-	src: url(https://fonts.gstatic.font.im/s/saira/v20/memWYa2wxmKQyPMrZX79wwYZQMhsyuShhKMjjbU9uXuA71rCks8xlg.woff2) format('woff2');
+	src: url(https://gfonts.aby.pub/s/saira/v20/memWYa2wxmKQyPMrZX79wwYZQMhsyuShhKMjjbU9uXuA71rCks8xlg.woff2) format('woff2');
 	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
+@media (prefers-color-scheme: dark){
+	html{
+		color-scheme: dark;
+	}
+	body{
+		background-image: url("https://images.cnblogs.com/cnblogs_com/blogs/766141/galleries/2264367/o_250422134638_Star%20trail%20compressed.jpg");
+		background-position: center;
+	}
+	#topics,#divCommentShow,#comment_form_container{
+		background-color: #ffffffef;	
+	}
+}
+@media (prefers-color-scheme: light){
+	html{
+		color-scheme: light;
+	}
+	body{
+		background-image: url("https://images.cnblogs.com/cnblogs_com/blogs/766141/galleries/2264367/o_37e9993a.png");
+		background-position: top;
+	}
+	#topics,#divCommentShow,#comment_form_container{
+		background-color: #000000cf;	
+	}
+}
+
 /*公共模板*/
 #EntryTag {
 	margin-top: 20px;
 	font-size: 9pt;
 	color: gray;
-}
-.topicListFooter {
-	text-align: right;
-	margin-right: 10px;
-	margin-top: 10px;
 }
 #divRefreshComments{
 	text-align: right; 
@@ -46,11 +67,11 @@
 * {
 	margin: 0;
 	padding: 0;
-	transition: 0.5s;
 }
 html {
 	height: 100%;
-	overflow-x: hidden;
+	overflow: hidden;
+	user-select: none;
 }
 ::selection{
 	background-color: #0bcf2540;
@@ -88,13 +109,12 @@ html {
 	background-color: #3498DB50;
 	border-radius: 2px;
 }
-body {
+body{
 	color: #000;
-	background: #FFF;
 	font-size: 15px;
 	min-height: 100%;
 	font-family: Saira, 等线;
-	background: no-repeat fixed url("https://images.cnblogs.com/cnblogs_com/blogs/766141/galleries/2264367/o_230117095841_BKG.png");
+	background-size: cover;
 }
 table {
 	border-collapse: collapse;
@@ -112,8 +132,9 @@ div.table-wrapper{
 	max-width: 100%;
 	min-width: unset;
 	width: fit-content;
+	margin-bottom: 3vh;
 }
-fieldset, img {
+fieldset{
 	border: 0;
 }
 ul {
@@ -170,6 +191,10 @@ span.math.inline{
 }
 span.math.inline *{
 	transition: none;
+	font-size: 1em;
+}
+span.cjk_fallback {
+	font-family: DengXian;
 }
 .katex .mathsf, .katex .textsf{
 	font-family: 等线 !important;
@@ -177,7 +202,8 @@ span.math.inline *{
 #cnblogs_post_body img{
 	border: 1px solid #ccc;
 	border-radius: 5px;
-	transition: 0.5s;
+	vertical-align: text-top;
+	transition: 0.5s !important;
 }
 #cnblogs_post_body img:hover{
 	border-color: #3498DB;
@@ -215,11 +241,15 @@ span.math.inline *{
 .blogpost-body:not(.cnblogs-markdown) :not(pre,div,td)>code{
 	color: #0092a5;
 	background-color: #caf9ff;
-	font-size: 18px;
+	font-size: inherit;
+	margin: 1px 0px;
 }
 .hljs-engine .code-fullscreen-overlay code{
 	top: 40px;
 	font-size: 18px;
+}
+#cnblogs_post_body table{
+	border-collapse: separate;
 }
 #cnblogs_post_body table:not(.hljs-ln) th{
 	font-weight: unset;
@@ -231,6 +261,10 @@ span.math.inline *{
 	font-weight: unset;
 	border: none;
 	border-bottom: 1px solid #ccc;
+	transition: border-color 0.5s;
+}
+#cnblogs_post_body table:not(.hljs-ln,.SysTreeTable) td:hover {
+	border-color: #0095ff;
 }
 #cnblogs_post_body table.simple td, #cnblogs_post_body table.simple th {
 	padding: 0px 2vw 0px 0px;
@@ -239,49 +273,100 @@ span.math.inline *{
 }
 div.toc{
 	position: fixed;
-	left: 90vw;
-	top: 75vh;
+	height: calc(100vh - 40px);
+	width: 30vw;
+	top: 40px;
+	right: -30vw;
+	font-size: 18px;
 	background-color: #fefefef0;
+	pointer-events: none;
+	overflow: hidden scroll;
 	z-index: 114;
-	padding: 0 0 7vh 0;
-	box-shadow: #333 1px 1px 3px;
-	height: 10vh;
-	width: calc(35vw - 12px);
-	overflow-x:hidden;
-	overflow-y: scroll;
-	border-radius: 5px;
 	transition: 1s;
 }
-div.toc:hover{
-	left: 70vw;
-	top: 40px;
-	height: calc(100vh - 80px);
-	border-radius: 0px;
+div.toc.open,div.toc.hover{
+	box-shadow: #333 1px 1px 3px;
+	right: 0;
+	padding: 0 0 7vh 0;
+	clip-path: none;
+	cursor: auto;
+	pointer-events: all;
 }
-div.toc-container-header{
+div.toc>span{
+	display: block;
+	position: fixed;
+	height: 43.3px;
+	width: 50px;
+	right: 2vmin;
+	bottom: 4vmin;
+	cursor: pointer;
+	background-color: #3498DB;
+	pointer-events: all;
+	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+	transform-origin: 50% 66.6%;
+	opacity: 1;
+	animation:
+		RotateF 8s infinite,
+		FlashF 3s infinite;
+	transition: 0.5s;
+}
+div.toc.open>span,div.toc.hover>span{
+	opacity: 0;
+	transition: 0.5s;
+}
+div.toc>span:hover{
+	background-color: #5EB95E;
+}
+@keyframes RotateF{
+	0%		{rotate: 20deg;}
+	12.5%	{rotate: -24deg;}
+	25%		{rotate: 18deg;}
+	37.5%	{rotate: -34deg;}
+	100%	{rotate: 380deg;}
+}
+@keyframes FlashF{
+	0%{scale: 1;}
+	6.25%{scale: 0.8;}
+	12.5%{scale: 1;}
+	18.75%{scale: 0.8;}
+	25%{scale: 1;}
+	31.25%{scale: 0.8;}
+	37.5%{scale: 1;}
+	43.75%{scale: 0.8;}
+	50%{scale: 1;}
+	56.25%{scale: 0.8;}
+	62.5%{scale: 1;}
+	68.75%{scale: 0.8;}
+	75%{scale: 1;}
+	87.5%{scale: 0.7;}
+	100%{scale: 1;}
+}
+div.toc>div.toc-container-header{
+	position: sticky;
 	padding: 2vw;
 	width: 100%;
-	font-size: 4vh;
-	position: sticky;
 	top: 0;
+	border-radius: 5px;
+	font-size: 4vh;
 	background: linear-gradient(180deg, white 80%, #ffffff00);
 	z-index: 115;
-	border-radius: 5px;
 }
 div.toc a{
+	display: inline-block;
+	width: 100%;
 	color: black;
 }
 div.toc a:hover{
-	color: #3498DB;
-}
-#cnblogs_post_body div.toc ul{
-	margin: 1vh 0 1vh 2vw;
-}
-#cnblogs_post_body div.toc ul ul{
-	transform: none;
+	translate: -1vw 0;
 }
 div.toc li{
+	border-radius: 5px;
+	padding-left: 3vw;
 	list-style: none !important;
+	transition: background-color 0.5s;
+}
+div.toc li:hover{
+	background-color: #0092a54f;
 }
 #cnblogs_post_body table{
 	width: max-content;
@@ -294,18 +379,18 @@ span#BigDot{
 	transform: translate(-50%,-50%);
 	pointer-events: none;
 	border-radius: 50%;
-	animation: RoundAni 0.5s linear;
+	animation: RoundAni 0.5s;
 	z-index: 114514;
 }
 @keyframes RoundAni {
 	0%{
 		width: 0px;
 		height: 0px;
-		opacity: 0.5;
+		opacity: 0.8;
 	}
 	100%{
-		width: 500px;
-		height: 500px;
+		width: 30vmin;
+		height: 30vmin;
 		opacity: 0;
 	}
 }
@@ -317,7 +402,8 @@ span#SmallDot{
 	border-radius: 50%;
 	height: 5px;
 	width: 5px;
-	animation: DotAni 1s linear infinite;
+	opacity: 0;
+	animation: DotAni 1.5s;
 	z-index: 114514;
 }
 @keyframes DotAni{
@@ -360,11 +446,13 @@ div#LoadingDiv{
 	position: fixed;
 	display: flex;
 	flex-wrap: wrap;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
 	width: 100vw;
-	background-color: white;
+	background-color: #ffffffe0;
+	backdrop-filter: blur(4px) saturate(150%);
 	text-align: center;
 	z-index: 114516;
 }
@@ -373,7 +461,10 @@ div#LoadingDiv{
 	100%{opacity: 0;}
 }
 span#LoadingSpan{
+	width: 35vw;
+	height: 15vh;
 	font-size: 10vh;
+	background-color: white;
 	user-select: none;
 	vertical-align: middle;
 }
@@ -387,7 +478,6 @@ span#LoadingMock{
 	height: 100%;
 	left: 0%;
 	right: 0%;
-	background-color: white;
 	mix-blend-mode: difference;
 	animation: LoadingMocking 2s infinite;
 }
@@ -405,19 +495,34 @@ span#LoadingMock{
 		right: 0%;
 	}
 }
+span#ShowMeButt{
+	position: absolute;
+	translate: 0 20vh;
+	cursor: pointer;
+	transition: 0.5s;
+}
+span#ShowMeButt:hover{
+	color: #0092a5;
+}
 
 /*-----------------各部分样式------------------*/
+
+
+
 /*home和头部开始*/
 #home {
 	margin: 0 auto;
 	min-width: 300px;
+	position: absolute;
+	inset: 40px 0 0 0;
+	overflow: hidden scroll;
+	scroll-behavior: smooth;
 }
 #header {
 	padding-bottom: 5px;
 	text-align: center;
 	display: flex;
 	flex-direction: column;
-	background: no-repeat url("https://images.cnblogs.com/cnblogs_com/blogs/766141/galleries/2264367/o_230209132521_th.jpg");
 	background-position-x: center;
 	background-size: 100%;
 }
@@ -454,16 +559,17 @@ a.headermaintitle{
 	float: right;
 }
 #navigator {
-	height: 40px;
-	clear: both;
+	position: absolute;
+	top: 0;
 	margin: unset;
-	position: fixed;
 	width: 100%;
+	height: 40px;
+	text-align: center;
 	background-color: white;
 	box-shadow: 1px 1px 5px #888;
 	overflow-y: hidden;
 	z-index: 11451;
-	order: 1;
+	clear: both;
 }
 #navList {
 	min-height: 40px;
@@ -505,6 +611,7 @@ a.headermaintitle{
 	width: 100%;
 	min-width: 250px;
 	text-align: left;
+	backdrop-filter: blur(3px);
 }
 #mainContent .forFlow{
 	float: none; 
@@ -692,7 +799,7 @@ a.headermaintitle{
 	margin: auto;
 	margin-top: 10px;
 	padding: 20px;
-	background-color: white;
+	background-color: #ffffffef;
 	box-shadow: 1px 1px 5px #888;
 	transition: 1s;
 	-o-text-overflow: ellipsis;
@@ -889,7 +996,6 @@ div#green_channel {
 	margin: auto;
 	margin-bottom: 2vh;
 	padding: 20px;
-	background-color: white;
 	box-shadow: 1px 1px 5px #888;
 	transition: 1s;
 }
@@ -987,6 +1093,9 @@ a.layer{
 	margin-bottom: 1em;
 	line-height: 1.5em;
 }
+.feedbackCon p{
+	user-select: text;
+}
 #divRefreshComments {
 	text-align: right;
 	margin-bottom: 10px;
@@ -999,7 +1108,6 @@ a.layer{
 	margin: auto;
 	margin-top: 10px;
 	padding: 20px;
-	background-color: white;
 	box-shadow: 1px 1px 5px #888;
 	transition: 1s;
 }
@@ -1076,8 +1184,55 @@ a.layer{
 	height: 0;
 	border: none;
 }
+.topicListFooter {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	margin: 2vh;
+	border-radius: 5px;
+	padding: 1vh;
+	background-color: white;
+	box-shadow: #ccc 2px 2px 5px;
+	text-align: right;
+}
 #nav_next_page{
-	margin: 3vh;
+	display: flex;
+}
+.pager a:last-child{
+	display: inline-block;
+}
+#nav_next_page,.pager a:last-child{
+	animation: DancingNav 2.5s infinite;
+}
+@keyframes DancingNav{
+	0%{
+		translate: 0 0;
+		rotate: 0deg;
+	}
+	10%{
+		translate: -2px 3px;
+		rotate: 10deg;
+	}
+	20%{
+		translate: 0 1px;
+		rotate: 0deg;
+	}
+	30%{
+		translate: 2px 3px;
+		rotate: -10deg;
+	}
+	40%{
+		translate: 0 1px;
+		rotate: 0deg;
+	}
+	80%{
+		translate: 0 0;
+		rotate: 360deg;
+	}
+	100%{
+		translate: 0 0;
+		rotate: 360deg;
+	}
 }
 .pager a,#nav_next_page a{
 	text-align: right;
@@ -1090,6 +1245,9 @@ a.layer{
 .pager a:hover,#nav_next_page a:hover{
 	background-color: white;
 	color: #3498DB;
+}
+.pager{
+	margin: 0;
 }
 .PostList {
 	border-bottom: 1px solid #ccc;
@@ -1201,6 +1359,7 @@ a.layer{
 /*正文样式*/
 #cnblogs_post_body{
 	font-size: 18px;
+	user-select: text;
 }
 #cnblogs_post_body h1{
 	font: 7vh Saira, 等线;
@@ -1304,6 +1463,7 @@ img.ImgNeo{
 	width: 4vmin;
 	height: auto;
 	border: unset !important;
+	vertical-align: bottom;
 }
 
 /*SysTree*/
@@ -1328,6 +1488,9 @@ html{
 	max-height: unset;
 	pointer-events: none;
 }
+#cnblogs_post_body .SysTreeWrapper.align table.SysTreeTable{
+	width: 100%;
+}
 .SysTreeWrapper td.SysTree{
 	margin: unset;
 	border: unset;
@@ -1336,12 +1499,18 @@ html{
 	min-width: unset;
 	pointer-events: none;
 }
+.SysTreeWrapper.align td.SysTree{
+	padding: 0px 0px 0px var(--systree-horizontal);
+}
 .SysTreeWrapper td.SysTreeLeaf{
 	margin-left: var(--systree-horizontal);
 }
 .SysTreeWrapper td.SysTree.Empty{
 	color: #00000000;
 	user-select: none;
+}
+.SysTreeWrapper td.SysTree.Leaf {
+	width: 7em;
 }
 .SysTreeWrapper td.SysTree:not(.Empty){
 	color: black;
@@ -1366,4 +1535,6 @@ html{
 .SysTreeWrapper td.SysTree:not(.Empty) span.SysTreeText{
 	pointer-events: all;
 	font-size: 22px;
+	overflow-x: visible;
+	word-break: keep-all;
 }
