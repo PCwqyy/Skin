@@ -2,6 +2,16 @@
 <div id="Dots' Home"></div>
 <span id="Cursor"></span>
 <script>
+
+function MoveElementTo(ele,par)
+{
+	try{
+		var e=document.querySelector(ele);
+		e.remove();
+		document.querySelector(par).appendChild(e);
+	}catch(error){}
+}
+
 var MouseX,MouseY;
 var WholePage=document.querySelector('body');
 var Home=document.getElementById("Dots' Home");
@@ -11,8 +21,31 @@ var Cursor=document.getElementById("Cursor");
 document.addEventListener('mousemove',function(e){
 	MouseX=e.pageX,MouseY=e.pageY;
 });
-document.addEventListener('wheel',function(e){
-	MouseX=e.pageX,MouseY=e.pageY;
+var ScrolledTitle=false,VVVHHH;
+const TopicMain=document.querySelector('#home');
+const BlogTitleEle=document.querySelector('#header');
+const BlogStatEle=document.querySelector('.blogStats');
+function TitleMinimizer()
+{
+	BlogTitleEle.style.top='',
+	BlogTitleEle.style.transition='1s',
+	BlogTitleEle.classList.add('scrolled'),
+	BlogStatEle.classList.add('scrolled');
+}
+TopicMain.addEventListener('wheel',()=>{
+	VVVHHH=window.innerHeight/100;
+	if(!ScrolledTitle)
+		BlogTitleEle.style.top=`${40*VVVHHH-TopicMain.scrollTop}px`;
+	if(TopicMain.scrollTop>30*VVVHHH)
+		if(!ScrolledTitle)
+			ScrolledTitle=true,
+			TitleMinimizer();
+		else;
+	else if(ScrolledTitle)
+		ScrolledTitle=false,
+		BlogTitleEle.style.transition='',
+		BlogTitleEle.classList.remove('scrolled'),
+		BlogStatEle.classList.remove('scrolled');
 });
 var BigDotsList=new Array,SmallDotsList=new Array;
 document.addEventListener('click',function()
@@ -327,6 +360,16 @@ PNI.addEventListener("input",()=>{
 </script>
 
 <script>
+function WarpPhotoInDiv(ele)
+{
+	var Tar=document.createElement('div');
+	Tar.classList.add('PhotoWrap');
+	ele.insertAdjacentElement('afterend',Tar);
+	ele.remove();
+	Tar.appendChild(ele);
+	Tar.innerHTML+=`<div class="PhotoAlt">${ele.alt}</div>`;
+	Tar.style.width=ele.style.width;
+}
 function PhotoFix(eles)
 {
 	for(var ele of eles)
@@ -340,6 +383,7 @@ function PhotoFix(eles)
 			continue;
 		ele.style.width=res[1];
 		ele.setAttribute('alt',alt.substring(res[0].length));
+		WarpPhotoInDiv(ele);
 	}
 }
 </script>
@@ -352,11 +396,11 @@ function ModifyPage()
 		var ShowMeButt=document.getElementById('ShowMeButt');
 		ShowMeButt.style.display='block';
 	},2000);
-	var NNNAAAVVV=document.querySelector("#navigator");
-	NNNAAAVVV.remove();
-	document.body.appendChild(NNNAAAVVV);
-	TTTOOOCCC.remove();
-	document.querySelector("#home").appendChild(TTTOOOCCC);
+	MoveElementTo('#navigator','body');
+	MoveElementTo('.toc','#home');
+	MoveElementTo('#homepage_bottom_pager','#home');
+	MoveElementTo('#homepage_top_pager','#home');
+	MoveElementTo('#header','body');
 }
 function OnLoad()
 {
@@ -381,6 +425,7 @@ function OnLoad()
 		TTTOOOCCC.addEventListener('mouseleave',()=>{
 			TTTOOOCCC.classList.remove('hover');
 		});
+		TTTOOOCCC.addEventListener('click',TitleMinimizer);
 		setTimeout(()=>{
 			TTTOOOCCC.classList.remove('open');
 		},4000);
