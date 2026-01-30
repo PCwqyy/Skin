@@ -421,3 +421,30 @@ try{
 	console.warn('[Something not found](Maybe)\n',err);
 }
 </script>
+<script type="module">
+const lowLimit=5,low=30;
+var tick=0,last=0,now=0,fps,lowCnt=0;
+function CalcFPS()
+{
+	tick++;
+	if(tick>=30)
+	{
+		now=Date.now();
+		fps=Math.round(tick*1000/(now-last));
+		if(fps<low){
+			lowCnt++;
+			console.info(`fps: ${fps}, count: ${lowCnt}ticks under ${low}`);
+		}
+		if(lowCnt>lowLimit)
+		{	
+			document.body.setAttribute('LowPerfomance','');
+			console.warn(`fps: ${fps} too low, low perf mode on.`);
+			return;
+		}
+		last=now;
+		tick=0;
+	}
+	requestAnimationFrame(CalcFPS);
+}
+CalcFPS();
+</script>

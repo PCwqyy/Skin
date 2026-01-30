@@ -1,5 +1,5 @@
 # PC's NeoLook for [Cnblogs](https://www.cnblogs.com)
-## Version 1.5
+## Version 1.5.1
 
 PCwqyy's cnblogs skin!
 PCwqyy的博客园皮肤！

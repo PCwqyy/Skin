@@ -673,6 +673,9 @@ a.headermaintitle:hover{
 	text-align: left;
 	backdrop-filter: blur(3px);
 }
+body[LowPerfomance] #main{
+	backdrop-filter: none;
+}
 #mainContent .forFlow{
 	float: none; 
 	width: 100%;
