@@ -676,6 +676,9 @@ a.headermaintitle:hover{
 body[LowPerfomance] #main{
 	backdrop-filter: none;
 }
+body[LowPerfomance] #main{
+	backdrop-filter: none;
+}
 #mainContent .forFlow{
 	float: none; 
 	width: 100%;
