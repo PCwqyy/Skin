@@ -1,52 +1,67 @@
 <!--Mouse Effect-->
 <div id="Dots' Home"></div>
 <span id="Cursor"></span>
-<script>
-var MouseX,MouseY;
-var WholePage=document.querySelector('body');
-var Home=document.getElementById("Dots' Home");
-var DotcntShow=document.getElementById("Dots' Home");
-var Cursor=document.getElementById("Cursor");
+<script type="module">
+function CSSColorToRGB(color)
+{
+	const tempDiv=document.createElement('div');
+	tempDiv.style.color=color;
+	document.body.appendChild(tempDiv);
+	const computedColor=getComputedStyle(tempDiv).color;
+	document.body.removeChild(tempDiv);
+	const rgbMatch=computedColor.match(/\d+/g);
+	if(rgbMatch&&rgbMatch.length>=3)
+		return rgbMatch.slice(0,3).map(Number);
+	console.warn('Invalid color format');
+}
+function Gradient(c1,c2,index)
+{
+	var cl1=CSSColorToRGB(c1);
+	var cl2=CSSColorToRGB(c2);
+	for(var i in cl1)
+		cl1[i]=cl1[i]*index+cl2[i]*(1-index);
+	return `rgb(${cl1[0]},${cl1[1]},${cl1[2]})`;
+}
+/** @type {HTMLCanvasElement} */
+var canvas=document.querySelector('canvas#dots');
+var ctx=canvas.getContext('2d');
+var Dots=[];
+/** @param {Event} e */
+function AddDot(e)
+	{Dots.push({x:e.clientX,y:e.clientY,t:Date.now()});}
+document.addEventListener('mousemove',(e)=>{AddDot(e);})
+function Resize()
+{
+	canvas.width=document.body.clientWidth;
+	canvas.height=document.body.clientHeight;
+}
+Resize();
+window.addEventListener('resize',Resize);
 
-document.addEventListener('mousemove',function(e){
-	MouseX=e.pageX,MouseY=e.pageY;
-});
-document.addEventListener('wheel',function(e){
-	MouseX=e.pageX,MouseY=e.pageY;
-});
-var BigDotsList=new Array,SmallDotsList=new Array;
-document.addEventListener('click',function()
+const TTL=1000;
+function Draw()
+{
+	if(Dots.length==0)	
 	{
-		var Round=document.createElement('span');
-		Round.id='BigDot';
-		Round.style.left=MouseX+'px';
-		Round.style.top=MouseY+'px';
-		BigDotsList.push(Round);
-		Home.appendChild(Round);
-	});
-setInterval(()=>{
-	for(i of BigDotsList)
-		i.remove();
-	console.log("BigDot Clean up");
-},60000);
-document.addEventListener('mousemove',function()
+		requestAnimationFrame(Draw);
+		return;
+	}
+	var now=Date.now();
+	ctx.clearRect(0,0,canvas.width,canvas.height);
+	Dots=Dots.filter(dot=>now-dot.t<TTL);
+	for(let i of Dots)
 	{
-		var dot=document.createElement('span');
-		dot.id='SmallDot';
-		dot.style.left=MouseX+'px';
-		dot.style.top=MouseY+'px';
-		Cursor.style.left=MouseX+'px';
-		Cursor.style.top=MouseY+'px';
-		SmallDotsList.push(dot);
-		Home.appendChild(dot);
-	});
-setInterval(()=>{
-	var size=SmallDotsList.length-100;
-	for(var i=0;i<size;i++)
-		SmallDotsList[0].remove(),
-		SmallDotsList.shift();
-	console.log("SmallDot Clean up");
-},5000);
+		ctx.save();
+		ctx.fillStyle=Gradient('#70a9cf','#cc0000',1-(now-i.t)/TTL);
+		ctx.globalAlpha=1-(now-i.t)/TTL;
+		ctx.beginPath();
+		ctx.arc(i.x,i.y,2.5,0,Math.PI*2);
+		ctx.fill();
+		ctx.restore();
+	}
+	requestAnimationFrame(Draw);
+}
+Draw();
 </script>
 
 <!--Special User Comment-->
@@ -345,19 +360,27 @@ function PhotoFix(eles)
 </script>
 
 <script>
-var TTTOOOCCC=document.querySelector(".toc");
+function MoveEle(which,toWhere)
+{
+	var ele=document.querySelector(which);
+	if(ele==undefined)
+	{
+		console.warn(`Element ${which} not found`);
+		return;
+	}
+	ele.remove();
+	document.querySelector(toWhere).appendChild(ele);
+}
 function ModifyPage()
 {
 	setTimeout(()=>{
 		var ShowMeButt=document.getElementById('ShowMeButt');
 		ShowMeButt.style.display='block';
 	},2000);
-	var NNNAAAVVV=document.querySelector("#navigator");
-	NNNAAAVVV.remove();
-	document.body.appendChild(NNNAAAVVV);
-	TTTOOOCCC.remove();
-	document.querySelector("#home").appendChild(TTTOOOCCC);
+	MoveEle('#navigator','body');
+	MoveEle('.toc','#home');
 }
+var TocEle=document.querySelector('.toc');
 function OnLoad()
 {
 	try
@@ -370,19 +393,19 @@ function OnLoad()
 	}catch(err){
 		console.error('[error occured]\n',err);
 	}
-	if(TTTOOOCCC!=undefined)
+	if(TocEle!=undefined)
 	{
-		TTTOOOCCC.classList.add('open');
+		TocEle.classList.add('open');
 		var Sppppppan=document.createElement('span');
-		TTTOOOCCC.appendChild(Sppppppan);
-		TTTOOOCCC.addEventListener('mouseenter',()=>{
-			TTTOOOCCC.classList.add('hover');
+		TocEle.appendChild(Sppppppan);
+		TocEle.addEventListener('mouseenter',()=>{
+			TocEle.classList.add('hover');
 		});
-		TTTOOOCCC.addEventListener('mouseleave',()=>{
-			TTTOOOCCC.classList.remove('hover');
+		TocEle.addEventListener('mouseleave',()=>{
+			TocEle.classList.remove('hover');
 		});
 		setTimeout(()=>{
-			TTTOOOCCC.classList.remove('open');
+			TocEle.classList.remove('open');
 		},4000);
 	}
 	var LoadingDiv=document.getElementById("LoadingDiv");

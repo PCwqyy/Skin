@@ -29,40 +29,26 @@
 @media (prefers-color-scheme: dark){
 	html{
 		color-scheme: dark;
+		color: white;
+		background-color: black;
 	}
 	body{
 		background-image: url("https://images.cnblogs.com/cnblogs_com/blogs/766141/galleries/2264367/o_250422134638_Star%20trail%20compressed.jpg");
 		background-position: center;
 	}
-	#topics,#divCommentShow,#comment_form_container{
-		background-color: #ffffffef;	
-	}
 }
 @media (prefers-color-scheme: light){
 	html{
 		color-scheme: light;
+		color: black;
+		background-color: white;
 	}
 	body{
 		background-image: url("https://images.cnblogs.com/cnblogs_com/blogs/766141/galleries/2264367/o_37e9993a.png");
 		background-position: top;
 	}
-	#topics,#divCommentShow,#comment_form_container{
-		background-color: #000000cf;	
-	}
 }
 
-/*公共模板*/
-#EntryTag {
-	margin-top: 20px;
-	font-size: 9pt;
-	color: gray;
-}
-#divRefreshComments{
-	text-align: right; 
-	margin-right: 10px;
-	margin-bottom: 5px;
-	font-size: 9pt;
-}
 /*全局样式*/
 * {
 	margin: 0;
@@ -81,7 +67,7 @@ html {
 	height: 12px;
 }
 ::-webkit-scrollbar-track{
-	background-color: white;
+	background-color: light-dark(white,black);
 }
 ::-webkit-scrollbar-thumb{
 	background-color: #2daebf50;
@@ -122,8 +108,6 @@ table {
 }
 thead{
 	position: sticky;
-	background-color: white;
-	color: black;
 	top: 0;
 	z-index: 2;
 }
@@ -171,14 +155,14 @@ a:active {
 	clear: both;
 }
 code{
-	font-family: "Consolas";
+	font-family: Cascadia Code Light, Consolas;
 	background-color: #eee;
 	border-radius: 3px;
 	padding: 0px 3px 0px 3px;
 }
 script{
 	display: none;
-	font-family: 'Consolas';
+	font-family: Cascadia Code Light, Consolas;
 	background-color: #efefef;
 	margin: 2vh 4vh;
 	padding: 2vh;
@@ -197,34 +181,46 @@ span.cjk_fallback {
 	font-family: DengXian;
 }
 .katex .mathsf, .katex .textsf{
-	font-family: 等线 !important;
+	font-family: DengXian !important;
 }
-#cnblogs_post_body img{
+img{
+	vertical-align: text-top;
+}
+.PhotoWrap{
+	display: flex;
+	flex-direction: column;
+	float: right;
 	border: 1px solid #ccc;
 	border-radius: 5px;
+	width: fit-content;
+	background-color: skyblue;
+	color: white;
+	overflow: hidden;
 	vertical-align: text-top;
 	transition: 0.5s !important;
 }
-#cnblogs_post_body img:hover{
+.PhotoWrap:hover{
 	border-color: #3498DB;
 }
-#cnblogs_post_body details{
+.PhotoAlt{
+	margin-left: 1vw;
+}
+details{
 	background-color: white;
 	padding: 5px;
 	margin: 5px 0px 5px 0px;
 	border-left: 15px solid #3498DB;
-	box-shadow: #666;
 	box-shadow: 1px 1px 5px #888;
 	transition: 0.5s;
 }
-#cnblogs_post_body details:hover{
+details:hover{
 	box-shadow: 3px 3px 10px #888;
 }
-#cnblogs_post_body details>summary{
+details>summary{
 	padding: 5px;
 	cursor: pointer;
 }
-#cnblogs_post_body details>summary::marker{
+details>summary::marker{
 	content: none;
 }
 #cnblogs_post_body pre code {
@@ -234,7 +230,7 @@ span.cjk_fallback {
 	font-size: 18px;
 }
 #cnblogs_post_body code{
-	font-family: "Consolas";
+	font-family: Cascadia Code Light, Consolas;
 	line-height: 1.5;
 }
 .cnblogs-markdown :not(pre,div)>code,
@@ -295,19 +291,15 @@ div.toc.open,div.toc.hover{
 div.toc>span{
 	display: block;
 	position: fixed;
-	height: 43.3px;
-	width: 50px;
-	right: 2vmin;
+	border-radius: 50%;
+	height: 40px;
+	width: 40px;
+	right: 4vmin;
 	bottom: 4vmin;
 	cursor: pointer;
 	background-color: #3498DB;
 	pointer-events: all;
-	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-	transform-origin: 50% 66.6%;
 	opacity: 1;
-	animation:
-		RotateF 8s infinite,
-		FlashF 3s infinite;
 	transition: 0.5s;
 }
 div.toc.open>span,div.toc.hover>span{
@@ -316,30 +308,6 @@ div.toc.open>span,div.toc.hover>span{
 }
 div.toc>span:hover{
 	background-color: #5EB95E;
-}
-@keyframes RotateF{
-	0%		{rotate: 20deg;}
-	12.5%	{rotate: -24deg;}
-	25%		{rotate: 18deg;}
-	37.5%	{rotate: -34deg;}
-	100%	{rotate: 380deg;}
-}
-@keyframes FlashF{
-	0%{scale: 1;}
-	6.25%{scale: 0.8;}
-	12.5%{scale: 1;}
-	18.75%{scale: 0.8;}
-	25%{scale: 1;}
-	31.25%{scale: 0.8;}
-	37.5%{scale: 1;}
-	43.75%{scale: 0.8;}
-	50%{scale: 1;}
-	56.25%{scale: 0.8;}
-	62.5%{scale: 1;}
-	68.75%{scale: 0.8;}
-	75%{scale: 1;}
-	87.5%{scale: 0.7;}
-	100%{scale: 1;}
 }
 div.toc>div.toc-container-header{
 	position: sticky;
@@ -366,12 +334,46 @@ div.toc li{
 	transition: background-color 0.5s;
 }
 div.toc li:hover{
-	background-color: #0092a54f;
+	background-color: #0092a50f;
 }
+div#MockMode{
+	height: 1em;
+	width: 1em;
+	border-radius: 50%;
+	padding: 10px;
+	color: white;
+	background-color: dodgerblue;
+	text-align: center;
+	line-height: 1em;
+	user-select: none;
+	cursor: pointer;
+	transition: 0.5s;
+}
+div#MockMode:hover{
+	background-color: mediumseagreen;
+}
+.postBody.mocked div#MockMode{
+	background-color: gold;
+}
+.postBody.mocked strong{
+	display: inline-block;
+	font-weight: normal;
+	margin: 1px 0px;
+	border: 2px solid gold;
+	border-radius: 10px;
+	padding: 0px 6px;
+	color: transparent;
+	background-color: #ffd7004f;
+	cursor: pointer;
+	transition: 0.5s;
+}
+.postBody.mocked strong:hover{
+	color: black;
+}
+
 #cnblogs_post_body table{
 	width: max-content;
 }
-
 
 span#BigDot{
 	position: absolute;
@@ -441,6 +443,15 @@ span#SmallDot{
 				#f2ff00 0px 0px 8px,
 				#f2ff00 0px 0px 10px;
 }
+canvas#dots{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	pointer-events: none;
+	z-index: 114514;
+}
 
 div#LoadingDiv{
 	position: fixed;
@@ -479,7 +490,9 @@ span#LoadingMock{
 	left: 0%;
 	right: 0%;
 	mix-blend-mode: difference;
-	animation: LoadingMocking 2s infinite;
+	animation: LoadingMocking 2s infinite ease;
+	will-change: left,right;
+	transform: translateZ(0);
 }
 @keyframes LoadingMocking{
 	0%{
@@ -507,7 +520,22 @@ span#ShowMeButt:hover{
 
 /*-----------------各部分样式------------------*/
 
+#topics,
+#divCommentShow,
+#blog-comments-placeholder,
+#comment_form_container,
+div.day{
+	background-color: light-dark(#ffffffef,#000000cf);
+	box-shadow: 1px 1px 2px light-dark(#888,#fff);
 
+}
+#topics:hover,
+#divCommentShow:hover,
+#blog-comments-placeholder:hover,
+#comment_form_container:hover,
+div.day:hover{
+	box-shadow: 5px 5px 15px light-dark(#888,#fff);
+}
 
 /*home和头部开始*/
 #home {
@@ -518,42 +546,69 @@ span#ShowMeButt:hover{
 	overflow: hidden scroll;
 	scroll-behavior: smooth;
 }
-#header {
-	padding-bottom: 5px;
+#header{
+	position: absolute;
+	right: 0;
+	top: 40vh;
+	width: 100vw;
+	z-index: 11452;
 	text-align: center;
-	display: flex;
-	flex-direction: column;
-	background-position-x: center;
-	background-size: 100%;
+	will-change: top right;
+	pointer-events: none;
 }
-#blogTitle {
-	height: 60vh;
+#header.scrolled{
+	right: 0;
+	top: 0vh;
+	width: 10vw;
+}
+#blogTitle{
 	width: 100%;
 	clear: both;
 	text-align: center;
-	order: 2;
+	transition: none;
 }
-#blogTitle h1 {
+#blogTitle h1{
+	width: 100%;
 	font-size: 8vh;
+}
+a.headermaintitle{
+	color: white;
 	text-shadow: #2daebf 0px 0px 10px,
 				 #2daebf 0px 0px 20px,
 				 #2daebf 0px 0px 30px,
 				 #2daebf 0px 0px 40px;
-	font-weight: none;
-	margin-top: 40vh;
+	transition: 0.5s text-shadow;
+	pointer-events: all;
 }
-#blogTitle h1:hover{
+a.headermaintitle:hover{
 	text-shadow: #f2ff00 0px 0px 10px,
 				 #f2ff00 0px 0px 20px,
 				 #f2ff00 0px 0px 30px,
 				 #f2ff00 0px 0px 40px;
 }
-a.headermaintitle{
-	color: white;
+.scrolled a.headermaintitle{
+	line-height: 40px;
+	color: #2daebf;
+	text-shadow: none;
 }
-#blogTitle h2 {
+.scrolled a.headermaintitle:hover{
+	color: #83da6d;
+	text-shadow: none;
+}
+.scrolled #blogTitle h1{
+	font-size: 20px;
+	margin-right: 1vw;
+}
+#blogTitle h2{
 	font-size: 16px;
+	height: 2em;
+	overflow-y: hidden;
 	color: white;
+	transition: opacity 0.5s;
+}
+.scrolled #blogTitle h2{
+	opacity: 0;
+	pointer-events: none;
 }
 #blogLogo {
 	float: right;
@@ -599,15 +654,20 @@ a.headermaintitle{
 #lnkBlogLogo{
 	display: block;
 }
-.blogStats {
+.blogStats{
 	float: right;
 	color: #888;
 	line-height: 40px;
 	margin-right: 10px;
 	text-align: right;
+	transition: 1s;
+}
+.blogStats.scrolled{
+	opacity: 0;
 }
 /*主页文章列表*/
 #main{
+	margin-top: 55vh;
 	width: 100%;
 	min-width: 250px;
 	text-align: left;
@@ -628,17 +688,15 @@ a.headermaintitle{
 	align-self: center;
 	width: 100%;
 }
-.day {
+.day{
 	margin-bottom: 20px;
 	padding: 15px;
 	margin: 10px;
 	font: 15px;
-	background-color: white;
-	box-shadow: 1px 1px 2px #888;
 	transition: 0.5s;
 }
-.day:hover {
-	box-shadow: 5px 5px 15px #888;
+.day:hover{
+	background-color: light-dark(white,black);
 }
 .dayTitle {
 	width: 100%;
@@ -917,6 +975,18 @@ div#green_channel {
 .diggword:hover{
 	right: 0vw;
 }
+.CCBYNCSA {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	align-items: center;
+	float: right;
+}
+.CCBYNCSA>img{
+	width: 100px;
+	pointer-events: none;
+	border-radius: 5px;
+}
 .postBody {
 	padding: 5px 2px 5px 5px;
 	line-height: 22px;
@@ -962,12 +1032,7 @@ div#green_channel {
 	margin: auto;
 	margin-top: 10px;
 	padding: 20px;
-	background-color: white;
-	box-shadow: 1px 1px 5px #888;
 	transition: 1s;
-}
-#blog-comments-placeholder:hover{
-	box-shadow: 5px 5px 20px #888;
 }
 #comment_nav{
 	margin: auto;
@@ -1184,7 +1249,7 @@ a.layer{
 	height: 0;
 	border: none;
 }
-.topicListFooter {
+.topicListFooter{
 	position: fixed;
 	right: 0;
 	bottom: 0;
@@ -1194,6 +1259,9 @@ a.layer{
 	background-color: white;
 	box-shadow: #ccc 2px 2px 5px;
 	text-align: right;
+}
+#homepage_bottom_pager{
+	display: none;
 }
 #nav_next_page{
 	display: flex;
@@ -1312,6 +1380,9 @@ a.layer{
 	height: 1.4em;
 	width: 90%;
 }
+.commentbox_main.comment_textarea{
+	transition: none;
+}
 /*相册页面*/
 .divPhoto {
 	border: 1px solid #ccc;
@@ -1337,7 +1408,7 @@ a.layer{
 	height: auto;
 	width: 100%;
 	left: 0px;
-	bottom: -22px;
+	bottom: -30px;
 	transition: 0.5s;
 	z-index: 100;
 }
