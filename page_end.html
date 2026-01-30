@@ -1,85 +1,67 @@
 <!--Mouse Effect-->
 <div id="Dots' Home"></div>
 <span id="Cursor"></span>
-<script>
-
-function MoveElementTo(ele,par)
+<script type="module">
+function CSSColorToRGB(color)
 {
-	try{
-		var e=document.querySelector(ele);
-		e.remove();
-		document.querySelector(par).appendChild(e);
-	}catch(error){}
+	const tempDiv=document.createElement('div');
+	tempDiv.style.color=color;
+	document.body.appendChild(tempDiv);
+	const computedColor=getComputedStyle(tempDiv).color;
+	document.body.removeChild(tempDiv);
+	const rgbMatch=computedColor.match(/\d+/g);
+	if(rgbMatch&&rgbMatch.length>=3)
+		return rgbMatch.slice(0,3).map(Number);
+	console.warn('Invalid color format');
 }
-
-var MouseX,MouseY;
-var WholePage=document.querySelector('body');
-var Home=document.getElementById("Dots' Home");
-var DotcntShow=document.getElementById("Dots' Home");
-var Cursor=document.getElementById("Cursor");
-
-document.addEventListener('mousemove',function(e){
-	MouseX=e.pageX,MouseY=e.pageY;
-});
-var ScrolledTitle=false,VVVHHH;
-const TopicMain=document.querySelector('#home');
-const BlogTitleEle=document.querySelector('#header');
-const BlogStatEle=document.querySelector('.blogStats');
-function TitleMinimizer()
+function Gradient(c1,c2,index)
 {
-	BlogTitleEle.style.top='',
-	BlogTitleEle.style.transition='1s',
-	BlogTitleEle.classList.add('scrolled'),
-	BlogStatEle.classList.add('scrolled');
+	var cl1=CSSColorToRGB(c1);
+	var cl2=CSSColorToRGB(c2);
+	for(var i in cl1)
+		cl1[i]=cl1[i]*index+cl2[i]*(1-index);
+	return `rgb(${cl1[0]},${cl1[1]},${cl1[2]})`;
 }
-TopicMain.addEventListener('wheel',()=>{
-	VVVHHH=window.innerHeight/100;
-	if(!ScrolledTitle)
-		BlogTitleEle.style.top=`${40*VVVHHH-TopicMain.scrollTop}px`;
-	if(TopicMain.scrollTop>30*VVVHHH)
-		if(!ScrolledTitle)
-			ScrolledTitle=true,
-			TitleMinimizer();
-		else;
-	else if(ScrolledTitle)
-		ScrolledTitle=false,
-		BlogTitleEle.style.transition='',
-		BlogTitleEle.classList.remove('scrolled'),
-		BlogStatEle.classList.remove('scrolled');
-});
-var BigDotsList=new Array,SmallDotsList=new Array;
-document.addEventListener('click',function()
+/** @type {HTMLCanvasElement} */
+var canvas=document.querySelector('canvas#dots');
+var ctx=canvas.getContext('2d');
+var Dots=[];
+/** @param {Event} e */
+function AddDot(e)
+	{Dots.push({x:e.clientX,y:e.clientY,t:Date.now()});}
+document.addEventListener('mousemove',(e)=>{AddDot(e);})
+function Resize()
+{
+	canvas.width=document.body.clientWidth;
+	canvas.height=document.body.clientHeight;
+}
+Resize();
+window.addEventListener('resize',Resize);
+
+const TTL=1000;
+function Draw()
+{
+	if(Dots.length==0)	
 	{
-		var Round=document.createElement('span');
-		Round.id='BigDot';
-		Round.style.left=MouseX+'px';
-		Round.style.top=MouseY+'px';
-		BigDotsList.push(Round);
-		Home.appendChild(Round);
-	});
-setInterval(()=>{
-	for(i of BigDotsList)
-		i.remove();
-	console.log("BigDot Clean up");
-},60000);
-document.addEventListener('mousemove',function()
+		requestAnimationFrame(Draw);
+		return;
+	}
+	var now=Date.now();
+	ctx.clearRect(0,0,canvas.width,canvas.height);
+	Dots=Dots.filter(dot=>now-dot.t<TTL);
+	for(let i of Dots)
 	{
-		var dot=document.createElement('span');
-		dot.id='SmallDot';
-		dot.style.left=MouseX+'px';
-		dot.style.top=MouseY+'px';
-		Cursor.style.left=MouseX+'px';
-		Cursor.style.top=MouseY+'px';
-		SmallDotsList.push(dot);
-		Home.appendChild(dot);
-	});
-setInterval(()=>{
-	var size=SmallDotsList.length-100;
-	for(var i=0;i<size;i++)
-		SmallDotsList[0].remove(),
-		SmallDotsList.shift();
-	console.log("SmallDot Clean up");
-},5000);
+		ctx.save();
+		ctx.fillStyle=Gradient('#70a9cf','#cc0000',1-(now-i.t)/TTL);
+		ctx.globalAlpha=1-(now-i.t)/TTL;
+		ctx.beginPath();
+		ctx.arc(i.x,i.y,2.5,0,Math.PI*2);
+		ctx.fill();
+		ctx.restore();
+	}
+	requestAnimationFrame(Draw);
+}
+Draw();
 </script>
 
 <!--Special User Comment-->
@@ -389,19 +371,30 @@ function PhotoFix(eles)
 </script>
 
 <script>
-var TTTOOOCCC=document.querySelector(".toc");
+function MoveEle(which,toWhere)
+{
+	var ele=document.querySelector(which);
+	if(ele==undefined)
+	{
+		console.warn(`Element ${which} not found`);
+		return;
+	}
+	ele.remove();
+	document.querySelector(toWhere).appendChild(ele);
+}
 function ModifyPage()
 {
 	setTimeout(()=>{
 		var ShowMeButt=document.getElementById('ShowMeButt');
 		ShowMeButt.style.display='block';
 	},2000);
-	MoveElementTo('#navigator','body');
-	MoveElementTo('.toc','#home');
+	MoveEle('#navigator','body');
+	MoveEle('.toc','#home');
 	MoveElementTo('#homepage_bottom_pager','#home');
 	MoveElementTo('#homepage_top_pager','#home');
-	MoveElementTo('#header','body');
+
 }
+var TocEle=document.querySelector('.toc');
 function OnLoad()
 {
 	try
@@ -414,20 +407,20 @@ function OnLoad()
 	}catch(err){
 		console.error('[error occured]\n',err);
 	}
-	if(TTTOOOCCC!=undefined)
+	if(TocEle!=undefined)
 	{
-		TTTOOOCCC.classList.add('open');
+		TocEle.classList.add('open');
 		var Sppppppan=document.createElement('span');
-		TTTOOOCCC.appendChild(Sppppppan);
-		TTTOOOCCC.addEventListener('mouseenter',()=>{
-			TTTOOOCCC.classList.add('hover');
+		TocEle.appendChild(Sppppppan);
+		TocEle.addEventListener('mouseenter',()=>{
+			TocEle.classList.add('hover');
 		});
-		TTTOOOCCC.addEventListener('mouseleave',()=>{
-			TTTOOOCCC.classList.remove('hover');
+		TocEle.addEventListener('mouseleave',()=>{
+			TocEle.classList.remove('hover');
 		});
 		TTTOOOCCC.addEventListener('click',TitleMinimizer);
 		setTimeout(()=>{
-			TTTOOOCCC.classList.remove('open');
+			TocEle.classList.remove('open');
 		},4000);
 	}
 	var LoadingDiv=document.getElementById("LoadingDiv");
@@ -442,4 +435,31 @@ try{
 }catch(err){
 	console.warn('[Something not found](Maybe)\n',err);
 }
+</script>
+<script type="module">
+const lowLimit=5,low=30;
+var tick=0,last=0,now=0,fps,lowCnt=0;
+function CalcFPS()
+{
+	tick++;
+	if(tick>=30)
+	{
+		now=Date.now();
+		fps=Math.round(tick*1000/(now-last));
+		if(fps<low){
+			lowCnt++;
+			console.info(`fps: ${fps}, count: ${lowCnt}ticks under ${low}`);
+		}
+		if(lowCnt>lowLimit)
+		{	
+			document.body.setAttribute('LowPerfomance','');
+			console.warn(`fps: ${fps} too low, low perf mode on.`);
+			return;
+		}
+		last=now;
+		tick=0;
+	}
+	requestAnimationFrame(CalcFPS);
+}
+CalcFPS();
 </script>
