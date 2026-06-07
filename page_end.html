@@ -1,3 +1,9 @@
+<!-- hljs -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/default.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.9.0/dist/highlightjs-line-numbers.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlightjs-lang.js@latest/dist/highlightjs-lang.min.js"></script>
+
 <!--Mouse Effect-->
 <div id="Dots' Home"></div>
 <span id="Cursor"></span>
@@ -218,6 +224,9 @@ function OnLoad()
 		PhotoFix(document.querySelectorAll('#cnblogs_post_body img'));
 		MermaidFix();
 		EnableJS();
+		hljs.highlightAll();
+		hljs.initLineNumbersOnLoad();
+		hljs.initLangOnLoad();
 		var LoadingDiv=document.querySelector("#LoadingDiv");
 		LoadingDiv.style.animation="LoadingOut 1s"
 		setTimeout(()=>{

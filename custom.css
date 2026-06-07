@@ -225,7 +225,8 @@ details>summary::marker{
 #cnblogs_post_body pre code {
 	padding: 5px;
 	border: 1px solid #ccc;
-	border-radius: 5px;
+	background-color: light-dark(white,black);
+	border-radius: 0px 5px 5px 5px;
 	font-size: 18px;
 }
 #cnblogs_post_body code{
@@ -243,8 +244,20 @@ details>summary::marker{
 	top: 40px;
 	font-size: 18px;
 }
+.hljs-lang {
+	width: min-content;
+	font-size: small;
+	border: 1px solid #ccc;
+	border-bottom: none;
+	background-color: light-dark(white, black);
+	padding: 0em 0.6em;
+	border-radius: 5px 5px 0 0;
+}
+
 #cnblogs_post_body table{
 	border-collapse: separate;
+	overflow-x: auto !important;
+	width: max-content;
 }
 #cnblogs_post_body table:not(.hljs-ln) th{
 	font-weight: unset;
@@ -369,10 +382,6 @@ div#MockMode:hover{
 }
 .postBody.mocked strong:hover{
 	color:light-dark(black,white);
-}
-
-#cnblogs_post_body table{
-	width: max-content;
 }
 
 span#BigDot{
