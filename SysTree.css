@@ -3,41 +3,69 @@ html{
 	--systree-solid: 2px;
 	--systree-horizontal: 6px;
 }
-.SysTreeTable{
-	border-collapse: collapse;
-	/* pointer-events: none; */
+#cnblogs_post_body p.SysTreeWrapper{
+	margin: 6vh 0;
+	padding: 1vh;
+	overflow-x: scroll;
+	overflow-y: hidden;
+}
+#cnblogs_post_body .SysTreeWrapper table.SysTreeTable{
+	display: table;
 	height: 100%;
-}
-.SysTree{
-	border-spacing: 0px;
 	margin: unset;
-	padding: 0px var(--systree-horizontal);
-	/* pointer-events: none; */
+	padding: unset;
+	border: unset;
+	border-collapse: collapse;
+	max-height: unset;
+	pointer-events: none;
 }
-.SysTreeLeaf{
+#cnblogs_post_body .SysTreeWrapper.align table.SysTreeTable{
+	width: 100%;
+}
+.SysTreeWrapper td.SysTree{
+	margin: unset;
+	border: unset;
+	border-spacing: 0px;
+	padding: 0px var(--systree-horizontal);
+	min-width: unset;
+	pointer-events: none;
+}
+.SysTreeWrapper.align td.SysTree{
+	padding: 0px 0px 0px var(--systree-horizontal);
+}
+.SysTreeWrapper td.SysTreeLeaf{
 	margin-left: var(--systree-horizontal);
 }
-.SysTree.Empty{
+.SysTreeWrapper td.SysTree.Empty{
 	color: #00000000;
 	user-select: none;
 }
-.SysTree.LineU{
+.SysTreeWrapper td.SysTree.Leaf {
+	width: 7em;
+}
+.SysTreeWrapper td.SysTree:not(.Empty){
+	color:light-dark(black,white);
+}
+.SysTreeWrapper td.SysTree.LineU{
 	border-top: var(--systree-col) var(--systree-solid) solid;
 	border-left: var(--systree-col) var(--systree-solid) solid;
 }
-.SysTree.LineD{
+.SysTreeWrapper td.SysTree.LineD{
 	border-bottom: var(--systree-col) var(--systree-solid) solid;
 	border-left: var(--systree-col) var(--systree-solid) solid;
 }
-.SysTree.LineH{
+.SysTreeWrapper td.SysTree.LineH{
 	border-bottom: var(--systree-col) var(--systree-solid) solid;
 }
-.SysTree.P{
+.SysTreeWrapper td.SysTree.P{
 	vertical-align: bottom;
 }
-.SysTree.Childs{
+.SysTreeWrapper td.SysTree.Childs{
 	padding-left: 0px;
 }
-.SysTreeText{
+.SysTreeWrapper td.SysTree:not(.Empty) span.SysTreeText{
 	pointer-events: all;
+	font-size: 22px;
+	overflow-x: visible;
+	word-break: keep-all;
 }

@@ -93,104 +93,7 @@ setTimeout(function()
 </script>
 
 <!--NeoTable-->
-<script>
-function CSSColorToRGB(color)
-{
-	const tempDiv=document.createElement('div');
-	tempDiv.style.color=color;
-	document.body.appendChild(tempDiv);
-	const computedColor=getComputedStyle(tempDiv).color;
-	document.body.removeChild(tempDiv);
-	const rgbMatch=computedColor.match(/\d+/g);
-	if(rgbMatch&&rgbMatch.length>=3)
-		return rgbMatch.slice(0,3).map(Number);
-	console.warn('Invalid color format');
-}
-function isDarkColor(color)
-{
-	const [r,g,b]=CSSColorToRGB(color);
-	const brightness=(r*299+g*587+b*114)/1000;
-	return brightness<186;
-}
-
-/** @param {HTMLCollectionOf<HTMLTableCellElement>} tars */
-function NeoTable(tars)
-{
-	/** @type {Array<HTMLElement>} */
-	var DelList=new Array();
-	for(i=0;i<tars.length;i++)
-	{
-		var now=tars[i];
-		now.classList.add("NeoTd");
-		res=now.innerHTML.match(/^\{simple}/);
-		if(res!=null)
-			now.parentElement.parentElement.parentElement.classList.add('simple'),
-			now.innerHTML=now.innerHTML.substring(res[0].length);
-		var res=now.innerHTML.match(/^\[([XOV])\]/);
-		if(res!=null)
-		{
-			switch(res[1])
-			{
-				case 'X':now.classList.add('NoTable');break;
-				case 'O':now.classList.add('HalfTable');break;
-				case 'V':now.classList.add('YesTable');break;
-			}
-			now.innerHTML=now.innerHTML.substring(res[0].length);
-		}
-		res=now.innerHTML.match(/^\[D\]/);
-		if(res!=null)
-		{
-			now.innerHTML=now.innerHTML.substring(res[0].length);
-			DelList.push(now);
-		}
-
-		res=now.innerHTML.match(/^\{cs=([0-9]+)\}/);
-		if(res!=null)
-		{
-			now.setAttribute('colspan',res[1]);
-			now.innerHTML=now.innerHTML.substring(res[0].length);
-			Ex=now;
-			for(var j=1;j<Number(res[1]);j++)
-			{
-				Ex=Ex.nextElementSibling;
-				DelList.push(Ex);
-			}
-		}
-		res=now.innerHTML.match(/^\{rs=([0-9]+)\}/);
-		if(res!=null)
-		{
-			now.setAttribute('rowspan',res[1]);
-			now.innerHTML=now.innerHTML.substring(res[0].length);
-		}
-		res=now.innerHTML.match(/^\{SL\}/);
-		if(res!=null)
-		{
-			now.classList.add('StickLeft');
-			now.innerHTML=now.innerHTML.substring(res[0].length);
-		}
-		res=now.innerHTML.match(/^\{col=(.+)\}/);
-		if(res!=null)
-		{
-			now.classList.add("diigoHighlight");//darkreader
-			now.style.setProperty("color",`${isDarkColor(res[1])?"#ffffffaf":"#000000af"}`);
-			now.style.setProperty("background-color",`${res[1]}`);
-			now.innerHTML=now.innerHTML.substring(res[0].length)+" ";
-		}
-
-		if(now.innerHTML=='')
-		{
-			if(now.classList.contains('YesTable'))
-				now.innerHTML=('<img class="ImgNeo" src="https://images.cnblogs.com/cnblogs_com/blogs/766141/galleries/2264367/o_250228030719_Tick.svg">');
-			if(now.classList.contains('HalfTable'))
-				now.innerHTML=('<img class="ImgNeo" src="https://images.cnblogs.com/cnblogs_com/blogs/766141/galleries/2264367/o_250228030719_Circle.svg">');
-			if(now.classList.contains('NoTable'))
-				now.innerHTML=('<img class="ImgNeo" src="https://images.cnblogs.com/cnblogs_com/blogs/766141/galleries/2264367/o_250228030719_Cross.svg">');
-		}
-	}
-	for(var i of DelList)
-		i.remove();
-}
-</script>
+<script src="https://cdn.jsdelivr.net/gh/PCwqyy/Skin/NeoTable.js"></script>
 
 <!--Mermaid fix-->
 <script>
@@ -212,135 +115,9 @@ function MermaidFix(){
 }
 </script>
 
-<!--SysTree-->
-<script>
-/** @type {String} */
-var TreeWork;
-/**
- *  @param {String} type 
- *  @returns {String} */
-function GetTreeHTML(type)
-{
-// console.log(`[Now ${type}]${TreeWork.substring(0,20)}...`);
-	var res=TreeWork.match(/^\s*([^\(|,|\)]*)\s*\(/);
-	if(res==undefined)
-	{
-		res=TreeWork.match(/^\s*([^\(|,|\)]+)\s*/);
-		TreeWork=TreeWork.substring(res[0].length);
-// console.log(`[Ret]${TreeWork.substring(0,20)}...`);
-		if(type=="DTree")
-		{
-			var res2=TreeWork.match(/^\s*,\s*/);
-			if(res2!=null)	type="MTree";
-		}
-		var Name=res[1];
-		var color="";
-		res=Name.match(/\s*\[(.+)\]\s*/);
-		if(res!=null)
-			Name=Name.substring(res[0].length),
-			color=res[1];
-		return `
-			<table class="SysTreeTable LeafTable"${color==""?"":` style=\"--systree-col:${color};\"`}><tr>
-				<td class="SysTree ${type=="DTree"||type=="MTree"?"LineD":"LineH"}"></td>
-				<td class="SysTree Leaf" rowspan="2">
-					<span class="SysTreeText">${Name}</span>
-				</td>
-			</tr><tr>
-				<td class="SysTree ${type=="UTree"||type=="MTree"?"LineU":"Empty"}"></td>
-			</tr></table>`;
-	}
-	TreeWork=TreeWork.substring(res[0].length);
-	var Parent=res[1];
-	var color="";
-	res=Parent.match(/\s*\[(.+)\]\s*/);
-	if(res!=null)
-		Parent=Parent.substring(res[0].length),
-		color=res[1];
-	var ret=`
-		<table class="SysTreeTable"><tr>
-			<td class="SysTree P ${type=="DTree"?"LineD":"LineH"}${Parent==""?" Empty":""}"${color==""?"":` style=\"border-bottom-color:${color};\"`}>
-				<span class="SysTreeText">
-					${Parent==""?"|":Parent}
-				</span>
-			</td>
-			<td class="SysTree Childs" rowspan="2">
-				<table class="SysTreeTable SysTreeChildsTable"${color==""?"":` style=\"--systree-col:${color};\"`}>`;
-// console.log(`[Then]${TreeWork.substring(0,20)}...`);
-	for(var i=0;true;i++)
-	{
-		var Child=GetTreeHTML(i==0?"UTree":"DTree");
-		ret+=`<tr><td class="SysTree Childs">${Child}</td></tr>`;
-// console.log(`TreeWork=${TreeWork.substring(0,20)}...`);
-		res=TreeWork.match(/^\s*,\s*/);
-		if(res==null)	break;
-		TreeWork=TreeWork.substring(res[0].length);
-// console.log(`[-,]${TreeWork.substring(0,20)}...`);
-	}
-	res=TreeWork.match(/^\s*\)\s*/);
-	TreeWork=TreeWork.substring(res[0].length);
-// console.log(`[-)]${TreeWork.substring(0,20)}...`);
-	if(type=="DTree")
-	{
-		res=TreeWork.match(/^\s*,\s*/);
-		if(res!=null)	type="MTree";
-	}
-// console.log(`Res:${ret.substring(0,20)}...`);
-	ret+=`
-			</table></td></tr><tr>
-			<td class="SysTree Empty ${type=="UTree"||type=="MTree"?"LineU":""}">|</td>
-		</tr></table>
-		`
-	return ret;
-}
+<script src="https://cdn.jsdelivr.net/gh/PCwqyy/Skin/SysTree.js"></script>
 
-/** @param {HTMLCollectionOf<HTMLDivElement>} eles */
-function MakeTree(eles)
-{
-	for(var i=0;i<eles.length;i++)
-	{
-		var res=eles[i].textContent.match(/^\s*\|\|\|([^\|]+?)\|\|\|/m);
-		if(res==null)	continue;
-		TreeWork=res[1];
-		eles[i].innerHTML=GetTreeHTML("Root");
-		eles[i].classList.add("SysTreeWrapper");
-		eles[i].addEventListener('click',(e)=>{
-			if(!e.shiftKey)	return;
-			var i=e.target;
-			while(!i.classList.contains("SysTreeWrapper"))
-				i=i.parentElement;
-			i.classList.toggle("align");
-		});
-	}
-}
-</script>
-
-<!--The End Poem-->
-<script>
-var str="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzΔΘΓΠΛΞΣΨϡΦΩϜαβγδεζθικλμνξοπρςτυφχψωσϠϝ";
-function generateMixed(n) {
-	var res="";
-	for(var i=0;i<n;i++)
-	{
-		var id=Math.ceil(Math.random()*99);
-		res+=str[id];
-	}
-	return res;
-}
-var PN=document.getElementsByClassName("playername");
-var SC=document.getElementsByClassName("scrambled");
-var PNI=document.getElementById("pnInput");
-for(var i=0;i<PN.length;i++)
-		PN[i].textContent=PNI.value;
-setInterval(()=>{
-	for(var i=0;i<SC.length;i++)
-		SC[i].textContent=generateMixed(4);
-},10);
-PNI.addEventListener("input",()=>{
-	for(var i=0;i<PN.length;i++)
-		PN[i].textContent=PNI.value;
-});
-</script>
-
+<!-- PhotoFix -->
 <script>
 function WarpPhotoInDiv(ele)
 {
@@ -370,6 +147,30 @@ function PhotoFix(eles)
 }
 </script>
 
+<!-- TOC -->
+<script>
+var TocEle=document.querySelector('.toc');
+function TOCfunction()
+{
+	if(TocEle!=undefined)
+	{
+		TocEle.classList.add('open');
+		var ButtonEle=document.createElement('span');
+		TocEle.appendChild(ButtonEle);
+		TocEle.addEventListener('mouseenter',()=>{
+			TocEle.classList.add('hover');
+		});
+		TocEle.addEventListener('mouseleave',()=>{
+			TocEle.classList.remove('hover');
+		});
+		setTimeout(()=>{
+			TocEle.classList.remove('open');
+		},4000);
+	}
+}
+</script>
+
+<!-- Main -->
 <script>
 function MoveEle(which,toWhere)
 {
@@ -382,6 +183,16 @@ function MoveEle(which,toWhere)
 	ele.remove();
 	document.querySelector(toWhere).appendChild(ele);
 }
+function EnableJS(){
+	document.querySelectorAll('js').forEach((e)=>{
+		var n=document.createElement('script');
+		for(let attr of e.attributes)
+			n.setAttribute(attr.name,attr.value);
+		n.innerHTML=e.textContent;
+		e.remove();
+		document.querySelector('#cnblogs_post_body').appendChild(n);
+	});
+}
 function ModifyPage()
 {
 	setTimeout(()=>{
@@ -390,52 +201,41 @@ function ModifyPage()
 	},2000);
 	MoveEle('#navigator','body');
 	MoveEle('.toc','#home');
-	MoveElementTo('#homepage_bottom_pager','#home');
-	MoveElementTo('#homepage_top_pager','#home');
-
+	MoveEle('#homepage_bottom_pager','#home');
+	MoveEle('#homepage_top_pager','#home');
+	TOCfunction();
+	document.querySelector('div#MockMode').addEventListener('click',()=>{
+		document.querySelector('.postBody').classList.toggle('mocked');
+	})
 }
-var TocEle=document.querySelector('.toc');
 function OnLoad()
 {
 	try
 	{
-		NeoTable(document.getElementsByTagName('td'));
-		NeoTable(document.getElementsByTagName('th'));
-		MakeTree(document.getElementsByTagName("p"));
+		NeoTable(document.querySelectorAll('td'));
+		NeoTable(document.querySelectorAll('th'));
+		MakeTree(document.querySelectorAll("p"));
 		PhotoFix(document.querySelectorAll('#cnblogs_post_body img'));
 		MermaidFix();
-	}catch(err){
-		console.error('[error occured]\n',err);
-	}
-	if(TocEle!=undefined)
-	{
-		TocEle.classList.add('open');
-		var Sppppppan=document.createElement('span');
-		TocEle.appendChild(Sppppppan);
-		TocEle.addEventListener('mouseenter',()=>{
-			TocEle.classList.add('hover');
-		});
-		TocEle.addEventListener('mouseleave',()=>{
-			TocEle.classList.remove('hover');
-		});
-		TTTOOOCCC.addEventListener('click',TitleMinimizer);
+		EnableJS();
+		var LoadingDiv=document.querySelector("#LoadingDiv");
+		LoadingDiv.style.animation="LoadingOut 1s"
 		setTimeout(()=>{
-			TocEle.classList.remove('open');
-		},4000);
+			LoadingDiv.style.display="none";
+		},990);
+	}catch(err){
+		console.error('[OnLoad]\n',err);
 	}
-	var LoadingDiv=document.getElementById("LoadingDiv");
-	LoadingDiv.style.animation="LoadingOut 1s"
-	setTimeout(()=>{
-		LoadingDiv.style.display="none";
-	},990);
 }
 window.onload=OnLoad;
 try{
 	ModifyPage();
 }catch(err){
-	console.warn('[Something not found](Maybe)\n',err);
+	console.error('[ModifyPage]',err);
 }
 </script>
+
+<!-- Low Eff Mode -->
 <script type="module">
 const lowLimit=5,low=30;
 var tick=0,last=0,now=0,fps,lowCnt=0;

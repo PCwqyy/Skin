@@ -77,15 +77,28 @@ function GetTreeHTML(type)
 	return ret;
 }
 
-/** @param {HTMLCollectionOf<HTMLDivElement>} eles */
-function MakeTree(eles)
+/** @param {Element} ele */
+function MakeTree(ele)
 {
-	for(var i=0;i<eles.length;i++)
-	{
-		var res=eles[i].textContent.match(/^\s*\|\|\|([^\|]+?)\|\|\|/m);
-		if(res==null)	continue;
-		TreeWork=res[1];
-		eles[i].innerHTML=GetTreeHTML("Root");
-		eles[i].classList.add("SysTreeWrapper");
-	}
+	TreeWork=ele.textContent;
+	console.log(TreeWork);
+	var pEle=document.createElement('p');
+	pEle.innerHTML=GetTreeHTML("Root");
+	pEle.classList.add("SysTreeWrapper");
+	pEle.addEventListener('click',(e)=>{
+		if(!e.shiftKey)	return;
+		var i=e.target;
+		while(!i.classList.contains("SysTreeWrapper"))
+			i=i.parentElement;
+		i.classList.toggle("align");
+	});
+	ele.parentElement.after(pEle);
+	ele.parentElement.remove();
+}
+
+function Systree(){
+	document.querySelectorAll("pre>code.language-Systree").forEach((ele)=>{
+		console.log(ele);
+		MakeTree(ele);
+	})
 }

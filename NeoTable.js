@@ -25,8 +25,12 @@ function NeoTable(tars)
 	for(i=0;i<tars.length;i++)
 	{
 		var now=tars[i];
-		var res=now.textContent.match(/^\[([XOV])\]/);
 		now.classList.add("NeoTd");
+		res=now.innerHTML.match(/^\{simple}/);
+		if(res!=null)
+			now.parentElement.parentElement.parentElement.classList.add('simple'),
+			now.innerHTML=now.innerHTML.substring(res[0].length);
+		var res=now.innerHTML.match(/^\[([XOV])\]/);
 		if(res!=null)
 		{
 			switch(res[1])
@@ -37,14 +41,14 @@ function NeoTable(tars)
 			}
 			now.innerHTML=now.innerHTML.substring(res[0].length);
 		}
-		res=now.textContent.match(/^\[D\]/);
+		res=now.innerHTML.match(/^\[D\]/);
 		if(res!=null)
 		{
 			now.innerHTML=now.innerHTML.substring(res[0].length);
 			DelList.push(now);
 		}
 
-		res=now.textContent.match(/^\{cs=([0-9]+)\}/);
+		res=now.innerHTML.match(/^\{cs=([0-9]+)\}/);
 		if(res!=null)
 		{
 			now.setAttribute('colspan',res[1]);
@@ -56,19 +60,19 @@ function NeoTable(tars)
 				DelList.push(Ex);
 			}
 		}
-		res=now.textContent.match(/^\{rs=([0-9]+)\}/);
+		res=now.innerHTML.match(/^\{rs=([0-9]+)\}/);
 		if(res!=null)
 		{
 			now.setAttribute('rowspan',res[1]);
 			now.innerHTML=now.innerHTML.substring(res[0].length);
 		}
-		res=now.textContent.match(/^\{SL\}/);
+		res=now.innerHTML.match(/^\{SL\}/);
 		if(res!=null)
 		{
 			now.classList.add('StickLeft');
 			now.innerHTML=now.innerHTML.substring(res[0].length);
 		}
-		res=now.textContent.match(/^\{col=(.+)\}/);
+		res=now.innerHTML.match(/^\{col=(.+)\}/);
 		if(res!=null)
 		{
 			now.classList.add("diigoHighlight");//darkreader
