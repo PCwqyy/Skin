@@ -3,7 +3,7 @@
 	function AddCopyButton(ele)
 	{
 		var btn=document.createElement("button");
-		btn.classList.add("hljs-copy-btn");
+		btn.classList.add("hljs-btn","hljs-copy-btn");
 		btn.textContent="Copy";
 		btn.addEventListener("click",()=>{
 			navigator.clipboard.writeText(ele.textContent);

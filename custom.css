@@ -167,7 +167,7 @@ script{
 	padding: 2vh;
 	border-radius: 10px;
 	border-left: #3498DB solid 10px;
-	box-shadow: #CCC 3px 3px 3px;
+	box-shadow: light-dark(#ccc,#333) 3px 3px 3px;
 }
 span.math.inline{
 	transition: none;
@@ -189,7 +189,7 @@ img{
 	display: flex;
 	flex-direction: column;
 	float: right;
-	border: 1px solid #ccc;
+	border: 1px solid light-dark(#ccc,#333);
 	border-radius: 5px;
 	width: fit-content;
 	background-color: skyblue;
@@ -224,7 +224,7 @@ details>summary::marker{
 }
 #cnblogs_post_body pre code {
 	padding: 5px;
-	border: 1px solid #ccc;
+	border: 1px solid light-dark(#ccc,#333);
 	background-color: light-dark(white,black);
 	border-radius: 0px 5px 5px 5px;
 	font-size: 18px;
@@ -244,14 +244,25 @@ details>summary::marker{
 	top: 40px;
 	font-size: 18px;
 }
-.hljs-lang {
-	width: min-content;
-	font-size: small;
-	border: 1px solid #ccc;
+.hljs-lang{
+	display: inline-block;
+	border: 1px solid light-dark(#ccc,#333);
 	border-bottom: none;
-	background-color: light-dark(white, black);
-	padding: 0em 0.6em;
 	border-radius: 5px 5px 0 0;
+	padding: 0em 0.6em;
+	width: min-content;
+	background-color: light-dark(white, black);
+	font-size: small;
+}
+.hljs-btn{
+	display: inline-block;
+	border: 1px solid light-dark(#ccc,#333);
+	border-bottom: none;
+	border-radius: 5px 5px 0 0;
+	padding: 0em 0.6em;
+	width: min-content;
+	background-color: light-dark(white, black);
+	font-size: small;
 }
 
 #cnblogs_post_body table{
@@ -263,12 +274,12 @@ details>summary::marker{
 	font-weight: unset;
 	background-color: light-dark(#f5f5f5,#0c0c0c);
 	border: none;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid light-dark(#ccc,#333);
 }
 #cnblogs_post_body table:not(.hljs-ln,.SysTreeTable) td{
 	font-weight: unset;
 	border: none;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid light-dark(#ccc,#333);
 	transition: border-color 0.5s;
 }
 #cnblogs_post_body table:not(.hljs-ln,.SysTreeTable) td:hover {
@@ -715,7 +726,7 @@ a.headermaintitle:hover{
 	margin-top: 3px;
 	margin-bottom: 10px;
 	clear:both;
-	border-bottom: 2px solid #ccc;
+	border-bottom: 2px solid light-dark(#ccc,#333);
 	text-align:left;
 }
 .postTitle {
@@ -763,7 +774,7 @@ a.headermaintitle:hover{
 .postSeparator {
 	clear: both;
 	height: 1px;
-	border-top: 1px solid #ccc;
+	border-top: 1px solid light-dark(#ccc,#333);
 	width: 100%;
 	clear:both;
 	float: right;
@@ -810,7 +821,7 @@ a.headermaintitle:hover{
 	padding: 5px;
 }
 #calendar tr,#calendar td{
-	border: 1px solid #ccc;
+	border: 1px solid light-dark(#ccc,#333);
 }
 #calendar .Cal {
 	width: 100%;
@@ -835,7 +846,7 @@ a.headermaintitle:hover{
 	font-weight: bold;
 }
 .CalDayHeader{
-	border-bottom:1px solid #ccc;	
+	border-bottom:1px solid light-dark(#ccc,#333);	
 }
 .CalTitle{/*日历年月头部样式*/
 	width:100%;
@@ -1159,7 +1170,7 @@ a.layer{
 	float: right;
 }
 .feedbackCon {
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid light-dark(#ccc,#333);
 	background: url('images/comment.gif') no-repeat 5px 0px;
 	padding: 15px 18px 10px 40px;
 	min-height: 35px;
@@ -1265,7 +1276,7 @@ a.layer{
 	border-radius: 5px;
 	padding: 1vh;
 	background-color:light-dark(white,black);
-	box-shadow: #ccc 2px 2px 5px;
+	box-shadow: light-dark(#ccc,#333) 2px 2px 5px;
 	text-align: right;
 }
 #homepage_bottom_pager{
@@ -1326,7 +1337,7 @@ a.layer{
 	margin: 0;
 }
 .PostList {
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid light-dark(#ccc,#333);
 	clear: both;
 	min-height: 1.5em;
 	_height: 1.5em;
@@ -1393,7 +1404,7 @@ a.layer{
 }
 /*相册页面*/
 .divPhoto {
-	border: 1px solid #ccc;
+	border: 1px solid light-dark(#ccc,#333);
 	padding: 2px;
 	margin-right: 10px;
 }
@@ -1409,7 +1420,7 @@ a.layer{
 /*留言页面*/
 #footer {
 	background-color:light-dark(white,black);
-	border-top: 1px solid #ccc;
+	border-top: 1px solid light-dark(#ccc,#333);
 	text-align: center;
 	position: fixed;
 	padding: 2px;
