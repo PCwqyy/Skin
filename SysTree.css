@@ -44,7 +44,7 @@ html{
 	width: 7em;
 }
 .SysTreeWrapper td.SysTree:not(.Empty){
-	color:light-dark(black,white);
+	color: light-dark(black,white);
 }
 .SysTreeWrapper td.SysTree.LineU{
 	border-top: var(--systree-col) var(--systree-solid) solid;

@@ -13,7 +13,7 @@
 .StickLeft{
 	position: sticky;
 	left: 0;
-	background-color:light-dark(white,black);
+	background-color: light-dark(white,black);
 	z-index: 1;
 }
 img.ImgNeo{
