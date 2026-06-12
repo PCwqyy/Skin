@@ -62,7 +62,7 @@
 		// Create container
 		var graph=document.createElement('div');
 		graph.classList.add('smiles');
-		var svgid=btoa(string).substring(0,8).padEnd(8,'0').replaceAll(/[^\w]/g,'_');
+		var svgid=crypto.randomUUID().substring(0,8);
 		graph.innerHTML=`<svg id="${svgid}"></svg>`
 		ele.parentElement.after(graph);
 		ele.parentElement.remove();
