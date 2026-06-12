@@ -1,0 +1,31 @@
+.smiles{
+	display: flex;
+	flex-direction: column;
+}
+.smiles>svg{
+	width: 100% !important;
+	height: auto !important;
+	pointer-events: none;
+}
+.smiles.smiles-reaction{
+	max-width: 100%;
+}
+.smiles.smiles-inline{
+	display: inline-flex;
+	vertical-align: middle;
+}
+.smiles.smiles-inline-block{
+	max-width: 8em;
+	display: inline-flex;
+}
+.smiles .smiles-name{
+	text-align: center;
+}
+.smiles-error{
+	color: red;
+	max-width: unset;
+}
+.smiles-error .smiles-string{
+	font-family: Cascadia Code Light, Consolas;
+	white-space: pre;
+}

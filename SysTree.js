@@ -97,7 +97,9 @@ function MakeTree(ele)
 }
 
 function Systree(){
-	document.querySelectorAll("pre>code.language-Systree").forEach((ele)=>{
+	document.querySelectorAll(
+		"pre>code:is(.language-Systree,.language-systree,.language-SysTree)"
+	).forEach((ele)=>{
 		console.log(ele);
 		MakeTree(ele);
 	})

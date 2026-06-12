@@ -125,7 +125,7 @@ function MermaidFix(){
 </script>
 
 <script src="https://cdn.jsdelivr.net/gh/PCwqyy/Skin@main/SysTree.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PCwqyy/Skin@main/Systree.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PCwqyy/Skin@main/SysTree.css">
 
 <!-- PhotoFix -->
 <script>
@@ -180,6 +180,12 @@ function TOCfunction()
 }
 </script>
 
+<!-- Smiles -->
+<script src="https://cdn.jsdelivr.net/npm/smiles-drawer@2/dist/smiles-drawer.min.js"></script>
+<script>
+
+</script>
+
 <!-- Main -->
 <script>
 function MoveEle(which,toWhere)
@@ -227,6 +233,7 @@ function OnLoad()
 		Systree();
 		PhotoFix(document.querySelectorAll('#cnblogs_post_body img'));
 		MermaidFix();
+		Smiles();
 		EnableJS();
 		hljs.highlightAll();
 		hljs.initLineNumbersOnLoad();

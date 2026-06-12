@@ -3,13 +3,13 @@ html{
 	--systree-solid: 2px;
 	--systree-horizontal: 6px;
 }
-#cnblogs_post_body p.SysTreeWrapper{
+p.SysTreeWrapper{
 	margin: 6vh 0;
 	padding: 1vh;
-	overflow-x: scroll;
+	overflow-x: auto;
 	overflow-y: hidden;
 }
-#cnblogs_post_body .SysTreeWrapper table.SysTreeTable{
+.SysTreeWrapper table.SysTreeTable{
 	display: table;
 	height: 100%;
 	margin: unset;
