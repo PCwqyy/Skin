@@ -23,7 +23,7 @@
 }
 .smiles-error{
 	color: red;
-	max-width: unset;
+	max-width: unset !important;
 }
 .smiles-error .smiles-string{
 	font-family: Cascadia Code Light, Consolas;
