@@ -107,7 +107,7 @@
 		document.querySelectorAll(
 			"pre>code:is(.language-Smiles,.language-smiles)"
 		).forEach(Parse);
-		document.querySelectorAll("code").forEach((ele)=>{
+		document.querySelectorAll(":not(pre)>code").forEach((ele)=>{
 			res=ele.textContent.trim().match(/\[Smiles\](?:\{([^}]*)\})?(.+)/im);
 			if(res)
 			{
